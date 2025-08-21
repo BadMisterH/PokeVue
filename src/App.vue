@@ -1,14 +1,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import PokemonCard from "./components/PokemonCard.vue";
-import Search from "./components/Search.vue";
+import PokemonAllSearch from "./components/PokemonAllSearch.vue";
 
 const pokemon = ref(null);
 const loading = ref(true);
 const error = ref("");
 const isActive = ref(false);
 
-async function fetchPokemon() {
+  async function fetchPokemon() {
   loading.value = true;
   error.value = "";
 
@@ -27,12 +26,11 @@ async function fetchPokemon() {
     }
 
     const result = await response.json();
-
     const filteredResult = result.filter((ele) => ele.pokedex_id !== 0);
     //filtre est detruit misigno 
 
     const gen1PokeAll = filteredResult.filter((pokemon) => {
-      return pokemon.pokedex_id <= 3;
+      return pokemon.pokedex_id <= 151;
     });
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -51,7 +49,7 @@ onMounted(fetchPokemon);
 </script>
 
 <template>
-  <Search :pokemonSearch="pokemon" />
+  <PokemonAllSearch :pokemonSearch="pokemon" />
   <div v-if="error" class="text-red-500 p-4">
     <h2>Erreur : {{ error }}</h2>
   </div>
