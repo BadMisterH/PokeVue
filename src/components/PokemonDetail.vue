@@ -22,6 +22,43 @@ const imageSrc = computed(() => {
   return pokemon.value?.sprites?.regular || '/images/default.png';
 })
 
+const resultTalent = pokemon.value?.talents.map((talentUnique) => {
+   return talentUnique.name
+})
+
+const functionStatsCustomPoke = (value) => {
+  const maxStat = 255; 
+  return (value / maxStat) * 100; // donne un pourcentage
+};
+
+const resultDataStats = Object.entries(pokemon.value?.stats || {})
+
+
+for (let i = 0; i<resultDataStats.length; i++){
+  resultDataStats[i].forEach(ele => console.log(ele))
+}
+
+
+const functionStatsCustom = (stats) => {
+  switch(stats){
+    case 'hp':
+      return Math.round(functionStatsCustomPoke(pokemon.value?.stats?.hp));
+    case "atk":
+      return Math.round(functionStatsCustomPoke(pokemon.value?.stats?.atk));
+    case "def":
+      return Math.round(functionStatsCustomPoke(pokemon.value?.stats?.def));
+    case "spe_def":
+      return Math.round(functionStatsCustomPoke(pokemon.value?.stats?.def));
+    case "spe_atk":
+      return Math.round(functionStatsCustomPoke(pokemon.value?.stats?.spe_atk));
+    case "vit":
+      return Math.round(functionStatsCustomPoke(pokemon.value?.stats?.vit));
+    default:
+      return 0
+  }
+}
+
+
 </script>
 
 <template>
@@ -43,12 +80,27 @@ const imageSrc = computed(() => {
 
       <div class="flex flex-col justify-center items-center gap-2">
         <h2 class=" text-2xl">About</h2>
-        <div class="grid grid-cols-3 border-2 gap-10">
+        <div class="grid grid-cols-3 gap-10 text-center">
           <span class=" flex flex-col gap-1"><h3>Weight</h3> <p>{{ pokemon?.weight }}</p></span>
-          <span class=" flex flex-col gap-1"><h3>Height</h3> {{ pokemon?.height }}</span>
-          <span class=" flex flex-col gap-1"><h3>Moves</h3></span>
+          <span class=" flex flex-col gap-1"><h3>Height</h3> <p>{{ pokemon?.height }}</p></span>
+          <span class=" flex flex-col gap-1"><h3>Talents</h3> <p>{{ resultTalent.slice(0, 2).join(', ')}}</p></span>
         </div>
       </div>
+
+<div v-for="[statName, statValue] in resultDataStats" :key="statName" class="mb-2">
+  <p>{{ statName }} : {{ statValue }}</p>
+  
+  <!-- Conteneur de la barre -->
+  <div class="bg-gray-300 h-3 rounded w-full">
+    <!-- Barre de progression -->
+    <div
+      class="bg-green-600 h-3 rounded"
+      :style="{ width: functionStatsCustom(statName) + '%' }"
+    ></div>
+  </div>
+</div>
+
+
     </div>
   </div>
 </template>
