@@ -9,6 +9,8 @@ const props = defineProps({
   pokemon: Object,
 });
 
+
+
 // export function formatPokemonId(id) {
 //   if (id === undefined || id === null) return "???";
 //   return "#" + id.toString().padStart(3, "0");
@@ -24,10 +26,6 @@ function handleClick() {
 const pokeId = formatPokemonId(props.pokemon?.pokedex_id)
 
 const pokeTypeImg = props.pokemon?.types;
-
-pokeTypeImg.forEach((ele) => {
-  console.log(ele.image)
-})
 
 const imageSrcType = (img) => {
   return img || '/images/default.png';
