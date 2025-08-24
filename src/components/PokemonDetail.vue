@@ -66,13 +66,13 @@ const functionStatsCustom = (stats) => {
   <div
     class=" fixed inset-0 flex items-center justify-center z-50 bg-black"
   >
-    <div class="px-10 py-5 card bg-base-100 w-160 border-2 border-amber-400 rounded-2xl">
+    <div class="px-10 py-5 card bg-base-100 w-130 border-2 border-amber-400 rounded-2xl">
         <button class=" absolute right-5 cursor-pointer" @click="closeCard">
             <X class=" cursor-pointer" color="red"/>
         </button>
-
+<!-- 
         <ArrowBigLeft class=" cursor-pointer absolute top-[50%] translate-[-50%]"/>
-        <ArrowBigRight class=" cursor-pointer absolute top-[50%] translate-[-50%] left-[94%]"/>
+        <ArrowBigRight class=" cursor-pointer absolute top-[50%] translate-[-50%] left-[94%]"/> -->
 
       <h2 class=" text-3xl text-center font-bold">{{ pokemon?.name?.fr }}</h2>
       {{ idPokedex }}
@@ -82,18 +82,18 @@ const functionStatsCustom = (stats) => {
           {{pokeOneType.name}}
         </span>
       </div>
-      <img class=" w-80 self-center mb-10" :src="imageSrc" alt="Pokémon"></img>
+      <img class=" w-30 self-center mb-5" :src="imageSrc" alt="Pokémon"></img>
 
       <div class="flex flex-col justify-center items-center gap-2">
         <!-- <h2 class=" text-2xl">About</h2> -->
         <div class="grid grid-cols-3 gap-10 text-center">
-          <span class=" flex flex-col gap-1"><h3>Weight</h3> <p>{{ pokemon?.weight }}</p></span>
-          <span class=" flex flex-col gap-1"><h3>Height</h3> <p>{{ pokemon?.height }}</p></span>
-          <span class=" flex flex-col gap-1"><h3>Talents</h3> <p>{{ resultTalent.slice(0, 2).join(', ')}}</p></span>
+          <span class=" flex flex-col gap-1"><h3 class=" text-[14px]">Weight</h3> <p class=" text-[12px]">{{ pokemon?.weight }}</p></span>
+          <span class=" flex flex-col gap-1"><h3 class="text-[14px]">Height</h3> <p class=" text-[12px]">{{ pokemon?.height }}</p></span>
+          <span class=" flex flex-col gap-1"><h3 class="text-[14px]">Talents</h3> <p class=" text-[12px]">{{ resultTalent.slice(0, 2).join(', ')}}</p></span>
         </div>
       </div>
 
-      <h2 class=" text-2xl text-center mt-10">Stats</h2>
+      <h3 class=" text-[14px] text-center mt-5">Stats</h3>
 <div class="grid grid-cols-3 gap-5 mt-2"> 
 <div v-for="[statName, statValue] in resultDataStats" :key="statName" class="mb-2">
   <p>{{ statName }} : {{ statValue }}</p>

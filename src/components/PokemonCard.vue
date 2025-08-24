@@ -62,11 +62,11 @@ const imageSrcType = (img) => {
         :key="typePoke.name"
         :class="[
           colorTypeJs(typePoke.name),
-          'text-white px-4 py-1 rounded-2xl text-center mb-1',
+          'text-white px-2 py-1 rounded-2xl text-center mb-1',
         ]"
       >
         {{ typePoke.name }}
-        <img :src="imageSrcType(typePoke.image)" class=" w-10 h-10 mt-2 m-auto"></img>
+        <img :src="imageSrcType(typePoke.image)" class=" w-10 h-10 mt-0.5 m-auto"></img>
       </span>
     </div>
   </li>
