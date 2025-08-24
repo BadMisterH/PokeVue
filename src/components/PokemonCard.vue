@@ -1,14 +1,9 @@
 <script setup>
 import colorTypeJs from "../helpers/PokeTypeColor.js";
-import { defineProps, ref } from "vue";
-import PokemonDetail from "./PokemonDetail.vue";
+import { defineProps, defineEmits, computed } from "vue";
 import { formatPokemonId } from "../helpers/formatPokemonId.js";
 
-const selectedPoke = ref(null);
-
-function closeDetailView() {
-  selectedPoke.value = null;
-}
+// Le détail est maintenant géré par le composant parent
 
 const props = defineProps({
   pokemon: Object,
@@ -18,13 +13,26 @@ const props = defineProps({
 //   if (id === undefined || id === null) return "???";
 //   return "#" + id.toString().padStart(3, "0");
 // }
+ 
+const emit = defineEmits(['select-pokemon-click']);
 
 function handleClick() {
-  console.log("Pokemon cliqué")
-  selectedPoke.value = props.pokemon; //cliquer sur la carte donc valeur
+  // Émettre un événement pour le parent au lieu d'afficher le détail ici
+  emit('select-pokemon-click', props.pokemon);
 }
 
 const pokeId = formatPokemonId(props.pokemon?.pokedex_id)
+
+const pokeTypeImg = props.pokemon?.types;
+
+pokeTypeImg.forEach((ele) => {
+  console.log(ele.image)
+})
+
+const imageSrcType = (img) => {
+  return img || '/images/default.png';
+}
+
 
 </script>
 
@@ -41,12 +49,7 @@ const pokeId = formatPokemonId(props.pokemon?.pokedex_id)
       - PokemonDetail (enfant) -->
    
 
-  <PokemonDetail
-    :pokemon-test="selectedPoke"
-    v-if="selectedPoke"
-    :id="pokemon.pokedex_id"
-    @close="closeDetailView"
-  />
+  <!-- Le modal PokemonDetail est maintenant géré par le composant parent -->
 
   <li
     @click="handleClick"
@@ -54,17 +57,18 @@ const pokeId = formatPokemonId(props.pokemon?.pokedex_id)
   >
     <p>{{ pokeId }}</p>
     <h2 class="text-2xl font-bold">{{ pokemon.name.fr }}</h2>
-    <img :src="pokemon.sprites.regular" />
-    <div class="flex flex-row gap-1">
+    <img :src="pokemon.sprites.regular" class=" mb-5"/>
+    <div class="flex flex-row gap-2">
       <span
         v-for="typePoke in pokemon.types"
         :key="typePoke.name"
         :class="[
           colorTypeJs(typePoke.name),
-          'text-white px-4 py-1 rounded-2xl',
+          'text-white px-4 py-1 rounded-2xl text-center mb-1',
         ]"
       >
         {{ typePoke.name }}
+        <img :src="imageSrcType(typePoke.image)" class=" w-10 h-10 mt-2 m-auto"></img>
       </span>
     </div>
   </li>
